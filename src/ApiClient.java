@@ -11,16 +11,11 @@ public class ApiClient {
     public String healthRequest() {
         String url = urlBase + "/health";
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .header("Content-Type", "application/json")
-                .uri(java.net.URI.create(url))
-                .GET()
-                .build();
-
+        HttpRequest req = getRequest(url);
         HttpResponse<String> response = null;
 
         try{
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            response = client.send(req, HttpResponse.BodyHandlers.ofString());
         }catch(IOException | InterruptedException e){
             throw new RuntimeException(e);
         }
@@ -31,16 +26,13 @@ public class ApiClient {
         return response.body();
     }
 
+    // Metodo get di tutti gli artisti
     public String getArtisti(){
         String url = urlBase + "/artisti";
 
-        HttpRequest req = HttpRequest.newBuilder()
-                .header("Content-Type","application/json")
-                .uri(java.net.URI.create(url))
-                .GET()
-                .build();
-
+        HttpRequest req = getRequest(url);
         HttpResponse<String> response = null;
+
         try{
             response = client.send(req, HttpResponse.BodyHandlers.ofString());
         }catch(IOException | InterruptedException e){
@@ -53,15 +45,11 @@ public class ApiClient {
         return response.body();
     }
 
+    // Metodo get di un artista specifico
     public String getArtista(int index){
         String url = urlBase + "/artisti/"+index;
 
-        HttpRequest req = HttpRequest.newBuilder()
-                .header("Content-Type", "application/json")
-                .uri(java.net.URI.create(url))
-                .GET()
-                .build();
-
+        HttpRequest req = getRequest(url);
         HttpResponse<String> response = null;
 
         try{
@@ -74,5 +62,15 @@ public class ApiClient {
             throw new RuntimeException("Error sending request");
 
         return response.body();
+    }
+
+    private HttpRequest getRequest(String url) {
+        HttpRequest req = HttpRequest.newBuilder()
+            .header("Content-Type", "application/json")
+            .uri(java.net.URI.create(url))
+            .GET()
+            .build();
+
+        return req;
     }
 }
