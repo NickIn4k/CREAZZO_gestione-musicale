@@ -72,7 +72,7 @@ public class Main {
                     salvaArtistaPreferito(sc, apiClient, db);
                     break;
                 case 10:
-                    eliminaArtistaPreferito(sc, apiClient, db);
+                    eliminaArtistaPreferito(sc, db);
                     break;
                 case 11:
                     System.out.println(db.selectAll());
@@ -179,7 +179,7 @@ public class Main {
         System.out.println("Dati salvati con successo");
     }
 
-    private static void eliminaArtistaPreferito(Scanner sc, ApiClient apiClient, DataBase db) {
+    private static void eliminaArtistaPreferito(Scanner sc, DataBase db) {
         System.out.println("Indica l'indice dell'artista");
         int i = sc.nextInt();
 
