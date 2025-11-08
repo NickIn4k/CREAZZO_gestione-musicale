@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 import java.util.Scanner;
 
 public class Main {
@@ -52,9 +54,10 @@ public class Main {
                     creaNuovoArtista(sc,  apiClient);
                     break;
                 case 7:
+                    aggiornaArtista(sc,  apiClient);
                     break;
                 case 8:
-                    //Delete
+                    eliminaArtista(sc,  apiClient);
                     break;
                 case 9:
                     // Salva nel DB
@@ -92,14 +95,56 @@ public class Main {
     }
 
     private static void creaNuovoArtista(Scanner sc, ApiClient apiClient) {
+        sc.nextLine(); // pulizia buffer
 
+        System.out.println("Inserisci il nome dell'artista:");
+        String nome = sc.nextLine();
+
+        System.out.println("Inserisci il genere musicale:");
+        String genere = sc.nextLine();
+
+        System.out.println("Inserisci la nazionalità:");
+        String nazionalita = sc.nextLine();
+
+        // Crea l’oggetto Artista
+        Artista artista = new Artista(nome, genere, nazionalita);
+
+        // Serializza in JSON
+        Gson gson = new Gson();
+        String jsonBody = gson.toJson(artista);
+
+        // Invio della richiesta
+        String response = apiClient.postNewArtista(jsonBody);
+        System.out.println("Risposta server: " + response);
     }
 
     private static void aggiornaArtista(Scanner sc, ApiClient apiClient) {
-        System.out.println("Indica l'indice dell'artista");
-        int i = sc.nextInt();
+        System.out.println("Inserisci l'ID dell'artista da aggiornare:");
+        int id = sc.nextInt();
+        sc.nextLine();
 
+        System.out.println("Inserisci il nuovo nome:");
+        String nome = sc.nextLine();
+
+        System.out.println("Inserisci il nuovo genere:");
+        String genere = sc.nextLine();
+
+        System.out.println("Inserisci la nuova nazionalità:");
+        String nazionalita = sc.nextLine();
+
+        Artista artista = new Artista(nome, genere, nazionalita);
+        Gson gson = new Gson();
+        String jsonBody = gson.toJson(artista);
+
+        String response = apiClient.putArtistaById(id, jsonBody);
+        System.out.println("Risposta server: " + response);
     }
 
+    private static void eliminaArtista(Scanner sc, ApiClient apiClient) {
+        System.out.println("Indica l'indice della canzone");
+        int i = sc.nextInt();
 
+        String response = apiClient.deleteArtistaById(i);
+        System.out.println("Risposta server: " + response);
+    }
 }

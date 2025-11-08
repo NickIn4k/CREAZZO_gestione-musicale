@@ -91,16 +91,13 @@ public class ApiClient {
     //region HTTP request generiche
 
     // POST inserimento dati nuovo artista
-    public String postNewArtista(Artista newArtista){
+    public String postNewArtista(String bodyJson){
         String url = urlBase + "/artisti";
-
-        //Serializzazione newArtista con json da mettere nel body
-        String newArtistaJson = "";
 
         HttpRequest req = HttpRequest.newBuilder()
             .header("Content-Type", "application/json")
             .uri(java.net.URI.create(url))
-            .POST(HttpRequest.BodyPublishers.ofString(newArtistaJson))
+            .POST(HttpRequest.BodyPublishers.ofString(bodyJson))
             .build();
 
         HttpResponse<String> response = sendRequest(req);
@@ -109,16 +106,13 @@ public class ApiClient {
     }
 
     //PUT aggiornamento dati di un artista specifico
-    public String putArtistaById(int id){
+    public String putArtistaById(int id, String jsonBody){
         String url = urlBase + "/artisti/"+id;
-
-        //Serializzazione newArtista con json da mettere nel body
-        String ArtistaJson = "";
 
         HttpRequest req = HttpRequest.newBuilder()
             .header("Content-Type", "application/json")
             .uri(java.net.URI.create(url))
-            .PUT(HttpRequest.BodyPublishers.ofString(ArtistaJson))
+            .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
             .build();
 
         HttpResponse<String> response = sendRequest(req);
