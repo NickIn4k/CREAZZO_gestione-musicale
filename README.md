@@ -68,3 +68,8 @@ Classi che rappresentano le entità principali del dominio:
 - `annoPubblicazione`
 - `Artista artista`
 
+#ChiVuoleEssereFucilato
+
+---
+### `Proposta Didattica`
+Controllerei l'esercizio svolto di `Gabriele Luciano Barichella`, in quanto è molto legato affettivamente a questo progetto
