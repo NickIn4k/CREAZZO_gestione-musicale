@@ -8,4 +8,14 @@ public class Canzone {
     public String toString() {
         return id + "\t" + titolo + "\t" + durata + "\t" + annoPubblicazione + "\n";
     }
+
+    public Canzone(int id, String titolo, int durata, int annoPubblicazione, Artista artista) {
+        this.id = id;
+        this.titolo = titolo;
+        this.durata = durata;
+        this.annoPubblicazione = annoPubblicazione;
+        this.artista = artista;
+    }
 }
+
+

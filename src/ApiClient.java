@@ -1,11 +1,16 @@
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 public class ApiClient {
     private final HttpClient client = HttpClient.newHttpClient();
     private final String urlBase = "http://localhost:4567/api";
+    private final Gson gson = new Gson();
 
     // Metodo comune per evitare ripetizioni
     private HttpResponse<String> sendRequest(HttpRequest req){
@@ -30,52 +35,52 @@ public class ApiClient {
     }
 
     // GET di tutti gli artisti
-    public String getArtisti(){
+    public List<Artista> getArtisti(){
         String url = urlBase + "/artisti";
 
         HttpRequest req = getRequest(url);
         HttpResponse<String> response = sendRequest(req);
 
-        return response.body();
+        return gson.fromJson(response.body(), new TypeToken<List<Artista>>(){}.getType());
     }
 
     // GET di un artista specifico
-    public String getArtista(int index){
+    public Artista getArtista(int index){
         String url = urlBase + "/artisti/"+index;
 
         HttpRequest req = getRequest(url);
         HttpResponse<String> response = sendRequest(req);
 
-        return response.body();
+        return gson.fromJson(response.body(), Artista.class);
     }
 
     // GET di tutte le canzoni di un artista specifico
-    public String getCanzoniByArtist(int index){
+    public List<Canzone> getCanzoniByArtist(int index){
         String url = urlBase + "/artisti/" + index + "/canzoni";
 
         HttpRequest req = getRequest(url);
         HttpResponse<String> response = sendRequest(req);
 
-        return response.body();
+        return gson.fromJson(response.body(), new TypeToken<List<Canzone>>(){}.getType());
     }
 
     // GET di tutte le canzoni
-    public String getCanzoni(){
+    public List<Canzone> getCanzoni(){
         String url = urlBase + "/canzoni";
 
         HttpRequest req = getRequest(url);
         HttpResponse<String> response = sendRequest(req);
 
-        return response.body();
+        return gson.fromJson(response.body(), new TypeToken<List<Canzone>>(){}.getType());
     }
 
     // GET di una canzone tramite il suo id
-    public String getCanzoneById(int id){
+    public Canzone getCanzoneById(int id){
         String url = urlBase + "/canzoni/"+id;
 
         HttpRequest req = getRequest(url);
         HttpResponse<String> response = sendRequest(req);
-        return response.body();
+        return gson.fromJson(response.body(), Canzone.class);
     }
 
     // Metodo comune per l'ottenimento della req

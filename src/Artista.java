@@ -23,7 +23,7 @@ public class Artista {
     }
 
     public String toString(){
-        String msg = id + "\t" + nome + "\t" + paese + "\t" + genere + "\nCanzoni:\n";
+        String msg = "Id: " + id + "\nNome: " + nome + "\nPaese: " + paese + "\nGenere: " + genere + "\n###### Canzoni ######\n" + "Id\tTitolo\tDurata\tAnno\n";
         for (Canzone c : canzoni)
             msg += c.toString();
 

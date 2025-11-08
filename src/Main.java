@@ -1,5 +1,6 @@
 import com.google.gson.Gson;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -27,16 +28,19 @@ public class Main {
                 "7.\t Put (aggiornamento) di dati artista\n" +
                 "8.\t Delete di un artista\n" +
                 "9.\t Salva un artista tra i preferiti\n" +
-                "10.\t Elimina un artista dai preferiti"
+                "10.\t Elimina un artista dai preferiti\n" +
+                "11.\t Visualizza tutti gli artisti salvati"
             );
 
             //selezione operazione
             int index = sc.nextInt();
-            if(index < 1 || index > 10)
+            if(index < 1 || index > 11)
                 System.exit(1);
             switch (index) {
                 case 1:
-                    System.out.println(apiClient.getArtisti());
+                    List<Artista> artists = apiClient.getArtisti();
+                    for(Artista a: artists)
+                        System.out.println(a.toString());
                     break;
                 case 2:
                     artistaSelect(sc,  apiClient);
@@ -45,10 +49,14 @@ public class Main {
                     canzoniByArtist(sc,  apiClient);
                     break;
                 case 4:
-                    System.out.println(apiClient.getCanzoni());
+                    List<Canzone> songs = apiClient.getCanzoni();
+                    String msg = "";
+                    for(Canzone s: songs)
+                        msg += s.toString();
+                    System.out.println(msg);
                     break;
                 case 5:
-                    canzoniById(sc,  apiClient);
+                    canzoneById(sc,  apiClient);
                     break;
                 case 6:
                     creaNuovoArtista(sc,  apiClient);
@@ -65,6 +73,9 @@ public class Main {
                 case 10:
                     // Elimina dal DB
                     break;
+                case 11:
+                    // SELECT *
+                    break;
             }
 
 
@@ -75,23 +86,30 @@ public class Main {
         }while(scelta.equalsIgnoreCase("si"));
     }
 
-
     private static void artistaSelect(Scanner sc, ApiClient apiClient) {
         System.out.println("Indica l'indice dell'artista");
         int i = sc.nextInt();
-        System.out.println(apiClient.getArtista(i));
+        System.out.println(apiClient.getArtista(i).toString());
     }
 
     private static void canzoniByArtist(Scanner sc, ApiClient apiClient) {
         System.out.println("Indica l'indice dell'artista");
         int i = sc.nextInt();
-        System.out.println(apiClient.getCanzoniByArtist(i));
+
+        List<Canzone> canzoni = apiClient.getCanzoniByArtist(i);
+        String msg = "";
+
+        for(Canzone c: canzoni)
+            msg += c.toString();
+
+        System.out.println(msg);
     }
 
-    private static void canzoniById(Scanner sc, ApiClient apiClient) {
+    private static void canzoneById(Scanner sc, ApiClient apiClient) {
         System.out.println("Indica l'indice della canzone");
         int i = sc.nextInt();
-        System.out.println(apiClient.getCanzoneById(i));
+
+        System.out.println(apiClient.getCanzoneById(i).toString());
     }
 
     private static void creaNuovoArtista(Scanner sc, ApiClient apiClient) {
