@@ -14,9 +14,9 @@ public class Main {
             System.out.println(
                 "1.\t Get di tutti gli artisti\n" +
                 "2.\t Get di un artista specifico\n" +
-                "3.\t Palle\n" +
-                "4.\t Palle2\n" +
-                "5.\t Palle\n" +
+                "3.\t Get delle canzoni di un artista specifico\n" +
+                "4.\t aa2\n" +
+                "5.\t aaa\n" +
                 "6.\t Palle2\n"
             );
 
@@ -30,6 +30,9 @@ public class Main {
                     break;
                 case 2:
                     artistaSelect(sc,  apiClient);
+                    break;
+                case 3:
+                    canzoniSelect(sc,  apiClient);
                     break;
             }
 
@@ -46,5 +49,11 @@ public class Main {
         System.out.println("Indica l'indice dell'artista");
         int i = sc.nextInt();
         System.out.println(apiClient.getArtista(i));
+    }
+
+    private static void canzoniSelect(Scanner sc, ApiClient apiClient) {
+        System.out.println("Indica l'indice dell'artista");
+        int i = sc.nextInt();
+        System.out.println(apiClient.getCanzoni(i));
     }
 }

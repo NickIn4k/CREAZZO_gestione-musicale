@@ -3,6 +3,9 @@ public class Canzone {
     private String titolo;
     private int durata;
     private int annoPubblicazione;
+    Artista artista;    // Per la chiave esterna del db locale
 
-    // Costruttori, getter, setter, toString()
+    public String toString() {
+        return id + "\t" + titolo + "\t" + durata + "\t" + annoPubblicazione + "\n";
+    }
 }

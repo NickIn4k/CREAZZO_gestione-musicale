@@ -7,5 +7,11 @@ public class Artista {
     private String genere;
     private List<Canzone> canzoni;
 
-    // Costruttori, getter, setter, toString()
+    public String toString(){
+        String msg = id + "\t" + nome + "\t" + paese + "\t" + genere + "\nCanzoni:\n";
+        for (Canzone c : canzoni)
+            msg += c.toString();
+
+        return msg;
+    }
 }
