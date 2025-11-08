@@ -1,11 +1,11 @@
 import java.util.List;
 
 public class Artista {
-    private int id;
-    private String nome;
-    private String paese;
-    private String genere;
-    private List<Canzone> canzoni;
+    public int id;
+    public String nome;
+    public String paese;
+    public String genere;
+    public List<Canzone> canzoni;
 
     public Artista(int id, String nome, String paese, String genere, List<Canzone> canzoni) {
         this.id = id;
@@ -21,6 +21,8 @@ public class Artista {
         this.paese = paese;
         this.genere = genere;
     }
+
+    public Artista(){} //per JSON
 
     public String toString(){
         String msg = "Id: " + id + "\nNome: " + nome + "\nPaese: " + paese + "\nGenere: " + genere + "\n###### Canzoni ######\n" + "Id\tTitolo\tDurata\tAnno\n";

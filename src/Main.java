@@ -7,6 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ApiClient apiClient = new ApiClient();
+        DataBase db = DataBase.getInstance();
 
         // Testo colorato per la connessione
         final String grn = "\u001B[32m";
@@ -68,16 +69,15 @@ public class Main {
                     eliminaArtista(sc,  apiClient);
                     break;
                 case 9:
-                    // Salva nel DB
+                    salvaArtistaPreferito(sc, apiClient, db);
                     break;
                 case 10:
-                    // Elimina dal DB
+                    eliminaArtistaPreferito(sc, apiClient, db);
                     break;
                 case 11:
-                    // SELECT *
+                    System.out.println(db.selectAll());
                     break;
             }
-
 
             // Gestione ciclicità
             sc.nextLine();
@@ -164,5 +164,28 @@ public class Main {
 
         String response = apiClient.deleteArtistaById(i);
         System.out.println("Risposta server: " + response);
+    }
+
+    private static void salvaArtistaPreferito(Scanner sc, ApiClient apiClient, DataBase db) {
+        System.out.println("Indica l'indice dell'artista");
+        int i = sc.nextInt();
+
+        Artista art = apiClient.getArtista(i);
+        db.addArtisti(art.id, art.nome, art.paese, art.genere);
+
+        for(Canzone c: art.canzoni)
+            db.addCanzoni(c.id, c.titolo, c.durata, c.annoPubblicazione, art.id);
+
+        System.out.println("Dati salvati con successo");
+    }
+
+    private static void eliminaArtistaPreferito(Scanner sc, ApiClient apiClient, DataBase db) {
+        System.out.println("Indica l'indice dell'artista");
+        int i = sc.nextInt();
+
+        db.deleteCanzoni(i);
+        db.deleteArtisti(i);
+
+        System.out.println("Dati eliminati con successo");
     }
 }
