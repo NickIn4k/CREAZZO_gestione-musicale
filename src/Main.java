@@ -30,7 +30,7 @@ public class Main {
 
             //selezione operazione
             int index = sc.nextInt();
-            if(index < 1 || index > 8)
+            if(index < 1 || index > 10)
                 System.exit(1);
             switch (index) {
                 case 1:
@@ -49,10 +49,9 @@ public class Main {
                     canzoniById(sc,  apiClient);
                     break;
                 case 6:
-                    //Post
+                    creaNuovoArtista(sc,  apiClient);
                     break;
                 case 7:
-                    //Put
                     break;
                 case 8:
                     //Delete
@@ -90,6 +89,16 @@ public class Main {
         System.out.println("Indica l'indice della canzone");
         int i = sc.nextInt();
         System.out.println(apiClient.getCanzoneById(i));
+    }
+
+    private static void creaNuovoArtista(Scanner sc, ApiClient apiClient) {
+
+    }
+
+    private static void aggiornaArtista(Scanner sc, ApiClient apiClient) {
+        System.out.println("Indica l'indice dell'artista");
+        int i = sc.nextInt();
+
     }
 
 

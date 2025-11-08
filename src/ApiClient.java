@@ -7,8 +7,9 @@ public class ApiClient {
     private final HttpClient client = HttpClient.newHttpClient();
     private final String urlBase = "http://localhost:4567/api";
 
-    private HttpResponse sendRequest(HttpRequest req){
-        HttpResponse<String> response = null;
+    // Metodo comune per evitare ripetizioni
+    private HttpResponse<String> sendRequest(HttpRequest req){
+        HttpResponse<String> response;
         try{
             response = client.send(req, HttpResponse.BodyHandlers.ofString());
         }catch(IOException | InterruptedException e){
@@ -79,16 +80,64 @@ public class ApiClient {
 
     // Metodo comune per l'ottenimento della req
     private HttpRequest getRequest(String url) {
-        HttpRequest req = HttpRequest.newBuilder()
+        return HttpRequest.newBuilder()
             .header("Content-Type", "application/json")
             .uri(java.net.URI.create(url))
             .GET()
             .build();
-
-        return req;
     }
     //endregion
 
     //region HTTP request generiche
+
+    // POST inserimento dati nuovo artista
+    public String postNewArtista(Artista newArtista){
+        String url = urlBase + "/artisti";
+
+        //Serializzazione newArtista con json da mettere nel body
+        String newArtistaJson = "";
+
+        HttpRequest req = HttpRequest.newBuilder()
+            .header("Content-Type", "application/json")
+            .uri(java.net.URI.create(url))
+            .POST(HttpRequest.BodyPublishers.ofString(newArtistaJson))
+            .build();
+
+        HttpResponse<String> response = sendRequest(req);
+
+        return response.body();
+    }
+
+    //PUT aggiornamento dati di un artista specifico
+    public String putArtistaById(int id){
+        String url = urlBase + "/artisti/"+id;
+
+        //Serializzazione newArtista con json da mettere nel body
+        String ArtistaJson = "";
+
+        HttpRequest req = HttpRequest.newBuilder()
+            .header("Content-Type", "application/json")
+            .uri(java.net.URI.create(url))
+            .PUT(HttpRequest.BodyPublishers.ofString(ArtistaJson))
+            .build();
+
+        HttpResponse<String> response = sendRequest(req);
+
+        return response.body();
+    }
+
+    //DELETE di un artista specifico
+    public String deleteArtistaById(int id){
+        String url = urlBase + "/artisti/"+id;
+
+        HttpRequest req = HttpRequest.newBuilder()
+            .header("Content-Type", "application/json")
+            .uri(java.net.URI.create(url))
+            .DELETE()
+            .build();
+
+        HttpResponse<String> response = sendRequest(req);
+        return response.body();
+    }
     //endregion
 }
