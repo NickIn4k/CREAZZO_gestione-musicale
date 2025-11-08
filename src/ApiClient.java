@@ -7,78 +7,77 @@ public class ApiClient {
     private final HttpClient client = HttpClient.newHttpClient();
     private final String urlBase = "http://localhost:4567/api";
 
+    private HttpResponse sendRequest(HttpRequest req){
+        HttpResponse<String> response = null;
+        try{
+            response = client.send(req, HttpResponse.BodyHandlers.ofString());
+        }catch(IOException | InterruptedException e){
+            throw new RuntimeException(e);
+        }
+        return response;
+    }
+
+    //region HTTP GET
     // Metodo di test per assicurarsi che l'API vada
     public String healthRequest() {
         String url = urlBase + "/health";
 
         HttpRequest req = getRequest(url);
-        HttpResponse<String> response = null;
-
-        try{
-            response = client.send(req, HttpResponse.BodyHandlers.ofString());
-        }catch(IOException | InterruptedException e){
-            throw new RuntimeException(e);
-        }
-
-        if(response == null)
-            throw new RuntimeException("Error sending request");
+        HttpResponse<String> response = sendRequest(req);
 
         return response.body();
     }
 
-    // Metodo get di tutti gli artisti
+    // GET di tutti gli artisti
     public String getArtisti(){
         String url = urlBase + "/artisti";
 
         HttpRequest req = getRequest(url);
-        HttpResponse<String> response = null;
-
-        try{
-            response = client.send(req, HttpResponse.BodyHandlers.ofString());
-        }catch(IOException | InterruptedException e){
-            throw new RuntimeException(e);
-        }
-
-        if(response == null)
-            throw new RuntimeException("Error sending request");
+        HttpResponse<String> response = sendRequest(req);
 
         return response.body();
     }
 
-    // Metodo get di un artista specifico
+    // GET di un artista specifico
     public String getArtista(int index){
         String url = urlBase + "/artisti/"+index;
 
         HttpRequest req = getRequest(url);
-        HttpResponse<String> response = null;
-
-        try{
-            response = client.send(req, HttpResponse.BodyHandlers.ofString());
-        }catch(IOException | InterruptedException e){
-            throw new RuntimeException(e);
-        }
-
-        if(response == null)
-            throw new RuntimeException("Error sending request");
+        HttpResponse<String> response = sendRequest(req);
 
         return response.body();
     }
 
-    public String getCanzoni(int index){
+    // GET di tutte le canzoni di un artista specifico
+    public String getCanzoniByArtist(int index){
         String url = urlBase + "/artisti/" + index + "/canzoni";
 
         HttpRequest req = getRequest(url);
-
-        HttpResponse<String> response = null;
-        try{
-            response = client.send(req, HttpResponse.BodyHandlers.ofString());
-        }catch(IOException | InterruptedException e){
-            throw new RuntimeException(e);
-        }
+        HttpResponse<String> response = sendRequest(req);
 
         return response.body();
     }
 
+    // GET di tutte le canzoni
+    public String getCanzoni(){
+        String url = urlBase + "/canzoni";
+
+        HttpRequest req = getRequest(url);
+        HttpResponse<String> response = sendRequest(req);
+
+        return response.body();
+    }
+
+    // GET di una canzone tramite il suo id
+    public String getCanzoneById(int id){
+        String url = urlBase + "/canzoni/"+id;
+
+        HttpRequest req = getRequest(url);
+        HttpResponse<String> response = sendRequest(req);
+        return response.body();
+    }
+
+    // Metodo comune per l'ottenimento della req
     private HttpRequest getRequest(String url) {
         HttpRequest req = HttpRequest.newBuilder()
             .header("Content-Type", "application/json")
@@ -88,4 +87,8 @@ public class ApiClient {
 
         return req;
     }
+    //endregion
+
+    //region HTTP request generiche
+    //endregion
 }
